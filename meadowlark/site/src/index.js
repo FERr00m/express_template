@@ -1,5 +1,5 @@
 import * as url from 'url';
-const __filename = url.fileURLToPath(import.meta.url);
+//const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 import path from 'path';
@@ -10,14 +10,8 @@ import { engine } from 'express-handlebars';
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Переменные
-const todos = [
-  'Победи свои страхи, или они победят тебя.',
-  'Рекам нужны истоки.',
-  'Не бойся неведомого.',
-  'Тебя ждет приятный сюрприз.',
-  'Будь проще везде, где только можно.',
-];
+// Кастомные модули
+import { getTodo } from './lib/todos.js';
 
 // Настройка механизма представлений Handlebars.
 app.engine(
@@ -36,8 +30,7 @@ app.use(express.static(path.resolve(__dirname, './public')));
 app.get('/', (req, res) => res.render('home'));
 
 app.get('/about', (req, res) => {
-  const randomTodo = todos[Math.floor(Math.random() * todos.length)];
-  res.render('about', { todo: randomTodo });
+  res.render('about', { todo: getTodo() });
 });
 
 // Пользовательская страница 404
