@@ -1,6 +1,7 @@
 import * as url from 'url';
 import process from 'process';
 import 'dotenv/config';
+import bodyParser from 'body-parser';
 //const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
@@ -15,7 +16,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Кастомные модули
-import { getTodo } from './lib/todos.js';
+// ....
 
 // Настройка механизма представлений Handlebars.
 app.engine(
@@ -29,11 +30,18 @@ app.set('views', path.resolve(__dirname, './views'));
 
 // Настройка публичной папки
 app.use(express.static(path.resolve(__dirname, './public')));
+// Настройка парсера body
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// Маршруты
+app.disable('x-powered-by');
+
+// Маршруты get
 app.get('/', handlers.home);
-
 app.get('/about', handlers.about);
+app.get('/headers', handlers.headers);
+
+// Маршруты post
+app.post('/submit', handlers.submit);
 
 // Пользовательская страница 404
 app.use(handlers.notFound);
