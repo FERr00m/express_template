@@ -5,7 +5,11 @@
   "description": "",
   "main": "./site/src/index.js",
   "scripts": {
-    "dev": "node ./meadowlark/site/src/index.js"
+    "dev": "nodemon --watch ./meadowlark/site/src/* nodemon ./meadowlark/site/src/index.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
+  },
+  "jest": {
+    "transform": {}
   },
   "keywords": [],
   "author": "",
@@ -13,5 +17,11 @@
   "dependencies": {
     "express": "^4.19.2",
     "express-handlebars": "^7.1.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.0",
+    "portfinder": "^1.0.32",
+    "puppeteer": "^22.8.1"
   }
 }
