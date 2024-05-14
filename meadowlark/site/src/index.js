@@ -1,5 +1,6 @@
 import * as url from 'url';
 import process from 'process';
+import 'dotenv/config';
 //const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
