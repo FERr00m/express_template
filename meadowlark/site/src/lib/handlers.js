@@ -15,6 +15,31 @@ const headers = (req, res) => {
 };
 const admin = (req, res) => res.render('admin', { layout: 'admin' }); // Используем другой layout
 
+const helpersTest = (req, res) => res.render('helpers-test');
+const newsletterSignup = (req, res) =>
+  res.render('newsletter-signup', { csrf: 'Здесь находится токен CSRF' });
+const newsletter = (req, res) =>
+  res.render('newsletter', { csrf: 'Здесь находится токен CSRF' });
+
+const newsletterSignupProcess = (req, res) => {
+  console.log('Форма (из строки запроса): ' + req.query.form);
+  console.log('Токен CSRF (из скрытого поля формы): ' + req.body._csrf);
+  console.log('Имя (из видимого поля формы): ' + req.body.name);
+  console.log('E-mail (из видимого поля формы): ' + req.body.email);
+  res.redirect(303, '/newsletter-signup/thank-you');
+};
+const newsletterSignupThankYou = (req, res) =>
+  res.render('newsletter-signup-thank-you');
+
+const api = {
+  newsletterSignup: (req, res) => {
+    console.log('Токен CSRF (из скрытого поля формы): ' + req.body._csrf);
+    console.log('Имя (из видимого поля формы): ' + req.body.name);
+    console.log('E-mail (из видимого поля формы): ' + req.body.email);
+    res.send({ result: 'success' });
+  },
+};
+
 const submit = (req, res) => {
   try {
     // Здесь мы попытаемся сохранить контакт в базе данных
@@ -43,4 +68,18 @@ const submit = (req, res) => {
   }
 };
 
-export default { home, about, notFound, serverError, headers, submit, admin };
+export default {
+  home,
+  about,
+  notFound,
+  serverError,
+  headers,
+  submit,
+  admin,
+  helpersTest,
+  newsletterSignup,
+  newsletterSignupProcess,
+  newsletterSignupThankYou,
+  newsletter,
+  api,
+};

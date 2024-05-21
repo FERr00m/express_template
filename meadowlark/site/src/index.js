@@ -11,12 +11,10 @@ import express from 'express';
 import { engine } from 'express-handlebars';
 
 import handlers from '#@/lib/handlers.js';
+import weatherMiddleware from '#@lib/middleware/weather.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-// Кастомные модули
-// ....
 
 // Настройка механизма представлений Handlebars.
 app.engine(
@@ -24,6 +22,13 @@ app.engine(
   engine({
     defaultLayout: 'main',
     extname: 'hbs',
+    helpers: {
+      section: function (name, options) {
+        if (!this._sections) this._sections = {};
+        this._sections[name] = options.fn(this);
+        return null;
+      },
+    },
   })
 );
 app.set('view engine', 'hbs');
@@ -35,6 +40,10 @@ app.set('views', path.resolve(__dirname, './views'));
 app.use(express.static(path.resolve(__dirname, './public')));
 // Настройка парсера body
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Кастомные Middleware
+app.use(weatherMiddleware);
 
 app.disable('x-powered-by');
 
@@ -43,9 +52,15 @@ app.get('/', handlers.home);
 app.get('/about', handlers.about);
 app.get('/headers', handlers.headers);
 app.get('/admin', handlers.admin);
+app.get('/helpers-test', handlers.helpersTest);
+app.get('/newsletter', handlers.newsletter);
+app.get('/newsletter-signup', handlers.newsletterSignup);
+app.get('/newsletter-signup/thank-you', handlers.newsletterSignupThankYou);
 
 // Маршруты post
 app.post('/submit', handlers.submit);
+app.post('/newsletter-signup/process', handlers.newsletterSignupProcess);
+app.post('/api/newsletter-signup', handlers.api.newsletterSignup);
 
 // Пользовательская страница 404
 app.use(handlers.notFound);
