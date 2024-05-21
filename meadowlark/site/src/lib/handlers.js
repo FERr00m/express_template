@@ -13,6 +13,7 @@ const headers = (req, res) => {
   );
   res.send(headers.join('\n'));
 };
+const admin = (req, res) => res.render('admin', { layout: 'admin' }); // Используем другой layout
 
 const submit = (req, res) => {
   try {
@@ -42,4 +43,4 @@ const submit = (req, res) => {
   }
 };
 
-export default { home, about, notFound, serverError, headers, submit };
+export default { home, about, notFound, serverError, headers, submit, admin };

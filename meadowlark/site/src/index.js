@@ -10,7 +10,7 @@ import path from 'path';
 import express from 'express';
 import { engine } from 'express-handlebars';
 
-import handlers from './lib/handlers.js';
+import handlers from '#@/lib/handlers.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -20,13 +20,16 @@ const port = process.env.PORT || 3000;
 
 // Настройка механизма представлений Handlebars.
 app.engine(
-  'handlebars',
+  'hbs',
   engine({
     defaultLayout: 'main',
+    extname: 'hbs',
   })
 );
-app.set('view engine', 'handlebars');
+app.set('view engine', 'hbs');
 app.set('views', path.resolve(__dirname, './views'));
+// Явным образом активировать кэширование представлений
+//app.set('view cache', true)
 
 // Настройка публичной папки
 app.use(express.static(path.resolve(__dirname, './public')));
@@ -39,6 +42,7 @@ app.disable('x-powered-by');
 app.get('/', handlers.home);
 app.get('/about', handlers.about);
 app.get('/headers', handlers.headers);
+app.get('/admin', handlers.admin);
 
 // Маршруты post
 app.post('/submit', handlers.submit);
