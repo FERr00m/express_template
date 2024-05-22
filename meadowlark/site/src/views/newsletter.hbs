@@ -33,7 +33,8 @@
 
   </form>
 </div>
-<!-- prettier-ignore -->
+
+{{! prettier-ignore }}
 <script>
   document.getElementById('newsletterSignupForm').addEventListener('submit', evt => { 
     evt.preventDefault(); 
@@ -51,7 +52,7 @@
           return
         } 
         
-        resp.json() 
+        return resp.json() 
         })
         .then(json => {
             container.innerHTML = '<b>Спасибо, что подписались!</b>' 
