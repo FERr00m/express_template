@@ -5,8 +5,10 @@
   "description": "",
   "main": "./meadowlark/site/src/index.js",
   "scripts": {
-    "dev": "nodemon --watch ./meadowlark/site/src/* nodemon ./meadowlark/site/src/index.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
+    "dev": "cross-env NODE_ENV=development nodemon --watch ./meadowlark/site/src/* nodemon ./meadowlark/site/src/index.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "start": "cross-env NODE_ENV=production node ./meadowlark/site/src/index.js",
+    "cluster": "cross-env NODE_ENV=production node ./meadowlark/site/src/cluster.js"
   },
   "jest": {
     "transform": {}
@@ -16,9 +18,15 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "chalk": "^5.3.0",
+    "cookie-parser": "^1.4.6",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "express-handlebars": "^7.1.2"
+    "express-handlebars": "^7.1.2",
+    "express-session": "^1.18.0",
+    "formidable": "^3.5.1",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",

@@ -55,9 +55,11 @@
         return resp.json() 
         })
         .then(json => {
+          console.log(json);
             container.innerHTML = '<b>Спасибо, что подписались!</b>' 
         })
         .catch(err => {
+          console.warn(err);
           container.innerHTML = `<b>Извините, возникли проблемы при подписке.` + `Пожалуйста, <a href="/newsletter">попробуйте еще раз</a>` }) 
           })
 </script>
