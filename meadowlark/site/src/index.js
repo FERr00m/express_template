@@ -20,9 +20,12 @@ import flashMiddleware from '#@lib/middleware/flash.js';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 
+import dbConnect from '#@db.js';
+await dbConnect();
+
 const app = express();
 const port = process.env.PORT || 3000;
-
+console.log('process.env.PORT', process.env.PORT);
 // Настройка механизма представлений Handlebars.
 app.engine(
   'hbs',
@@ -79,6 +82,8 @@ app.use(weatherMiddleware);
 app.use(flashMiddleware);
 
 app.disable('x-powered-by');
+// Доверяем прокси серваку
+app.enable('trust proxy');
 
 // Маршруты get
 app.get('/', handlers.home);
@@ -136,6 +141,6 @@ function startServer(port) {
 
 // преобразовать наше приложение так, чтобы оно импортировалось как модуль
 if (process.argv[1] === url.fileURLToPath(import.meta.url)) {
-  startServer(process.env.PORT || 3000);
+  startServer(port);
 }
 export default startServer;

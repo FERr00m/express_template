@@ -8,9 +8,11 @@ function startWorker() {
 }
 
 if (cluster.isMaster) {
-  let cpus = os.cpus();
-  // Уменьшаем кол-во исп. ядер
-  for (let i = 0; i < cpus.length - 2; i++) {
+  let maxCpus = os.cpus().length;
+  let minCpus = 1;
+  // Оставляем одно ядро свободным
+  let availableCpus = maxCpus > minCpus ? maxCpus - minCpus : minCpus;
+  for (let i = 0; i < availableCpus; i++) {
     startWorker();
   }
 

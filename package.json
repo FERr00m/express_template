@@ -8,7 +8,8 @@
     "dev": "cross-env NODE_ENV=development nodemon --watch ./meadowlark/site/src/* nodemon ./meadowlark/site/src/index.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "start": "cross-env NODE_ENV=production node ./meadowlark/site/src/index.js",
-    "cluster": "cross-env NODE_ENV=production node ./meadowlark/site/src/cluster.js"
+    "cluster": "cross-env NODE_ENV=production node ./meadowlark/site/src/cluster.js",
+    "stress": "artillery quick --count 10 -n 20 http://localhost:3000/"
   },
   "jest": {
     "transform": {}
@@ -26,6 +27,7 @@
     "express-handlebars": "^7.1.2",
     "express-session": "^1.18.0",
     "formidable": "^3.5.1",
+    "mongoose": "^8.4.0",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
